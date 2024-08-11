@@ -8,6 +8,8 @@ export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, data } = useChat();
   const bottomRef = useRef(null);
 
+  console.log("DataStream:", data);
+
   useEffect(() => {
     if (bottomRef.current) {
       (bottomRef.current as HTMLElement).scrollIntoView({ behavior: "smooth" });
@@ -16,7 +18,6 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
       {messages.map((m) => (
         <div
           key={m.id}
