@@ -10,8 +10,13 @@ import { readStreamableValue } from "ai/rsc";
 export default function Chat() {
   const [messages, setMessages] = useState<CoreMessage[]>([]);
   const [input, setInput] = useState("");
+  const [data, setData] = useState<any>(null);
 
   const bottomRef = useRef(null);
+
+  useEffect(() => {
+    console.log("DataStream: ", data);
+  }, [data]);
 
   useEffect(() => {
     if (bottomRef.current) {
@@ -47,8 +52,9 @@ export default function Chat() {
           setInput("");
 
           const result = await continueConversation(newMessages);
+          setData(result.data);
 
-          for await (const content of readStreamableValue(result)) {
+          for await (const content of readStreamableValue(result.message)) {
             setMessages([
               ...newMessages,
               {
